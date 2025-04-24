@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>FURIA Chat - Fala aí, fã!</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #9c27b0;
+    }
+    #chat-box {
+      width: 100%;
+      max-width: 600px;
+      background-color: #1c1c1c;
+      border: 2px solid #9c27b0;
+      border-radius: 10px;
+      padding: 15px;
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin: 10px 0;
+    }
+    .user {
+      text-align: right;
+      color: #4fc3f7;
+    }
+    .bot {
+      text-align: left;
+      color: #9c27b0;
+    }
+    #input-area {
+      display: flex;
+      width: 100%;
+      max-width: 600px;
+    }
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px 0 0 5px;
+      border: none;
+      font-size: 16px;
+    }
+    #send-btn {
+      background-color: #9c27b0;
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      cursor: pointer;
+      border-radius: 0 5px 5px 0;
+    }
+
+    .comandos {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>FURIA Chat 💬</h1>
+  <p>Seu bot oficial pra tudo sobre o time de CS da FURIA!</p>
+
+  <div id="chat-box"></div>
+
+  <div id="input-area">
+    <input type="text" id="user-input" placeholder="Manda tua pergunta aí!">
+    <button id="send-btn">Enviar</button>
+  </div>
+
+  <div class="comandos">
+    <h1>/jogo &nbsp /resultado  &nbsp&nbsp /arte &nbsp /player</h1>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+
+    function appendMessage(message, sender) {
+      const div = document.createElement("div");
+      div.className = "message " + sender;
+      div.textContent = message;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+      input = input.toLowerCase();
+      if (input.includes("jogo")) return "O próximo jogo é contra a NAVI, amanhã às 16h! 🔥";
+      if (input.includes("resultado")) return "Último jogo: vitória contra a Liquid por 2x1! 🐍💥";
+      if (input.includes("arte")) return "Confira a nova camisa da FURIA aqui: https://loja.furia.gg 👕";
+      if (input.includes("player") || input.includes("jogador")) return "KSCERATO tá jogando muito! 1.34 de rating no último campeonato.";
+      return "Não entendi bem, mas bora FURIA! 😎 Pergunta sobre jogos, players ou produtos!";
+    }
+
+    sendBtn.addEventListener("click", () => {
+      const text = userInput.value;
+      if (text.trim() === "") return;
+      appendMessage(text, "user");
+      const response = getBotResponse(text);
+      setTimeout(() => appendMessage(response, "bot"), 500);
+      userInput.value = "";
+    });
+  </script>
+
+</body>
+</html>
